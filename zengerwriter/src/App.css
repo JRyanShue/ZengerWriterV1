@@ -1,0 +1,429 @@
+
+:root {
+  --gray-color: rgb(189, 189, 189);
+
+  --prepare-space: 68vw;
+  --queue-space: 20vw;
+
+  --header-banner-height: 50px;
+  --header-height: 100px;
+
+  --background-color: white;
+
+}
+
+.heading-banner {
+
+  height: var(--header-banner-height); 
+  /* background-color: rgb(15, 18, 46); */
+  /* background-color: rgb(27, 27, 27); */
+  background-image: linear-gradient(rgb(27, 27, 27), rgb(58, 58, 58));
+
+}
+
+  .heading-banner .title {
+
+    --margin: 10px;
+    
+    color: white;
+    font-size: calc(var(--header-banner-height) - 2 * var(--margin));
+    margin-left: var(--margin);
+    font-weight: bold;
+
+  }
+
+.selected-nav-element {
+
+  --button-height: 30px;
+
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: blue;
+  border-radius: 5px;
+  color: black;
+  height: var(--button-height);
+  border: 1px solid white;
+  text-align: center;
+
+}
+
+  .selected-nav-element p {
+    color: white;
+  }
+
+.nav-element {
+
+  --button-height: 30px;
+
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  height: var(--button-height);
+  border: 1px solid white;
+  text-align: center;
+
+}
+
+  .nav-element:hover {
+    background-color: gray;
+    cursor: pointer;
+  }
+
+  .nav-element p {
+    color: black;
+  }
+
+.child-text {
+  /* Place text in center */
+  transform: translate(0%, -60%);
+}
+
+.sliceBox {
+
+  position: absolute;
+  margin-left: 0px;
+  top: var(--header-banner-height);
+  left: 0px;
+  width: calc(100vw - var(--queue-space) - var(--prepare-space));
+  margin-top: 0px;
+  height: 100px;
+  background-color: rgb(241, 241, 241);
+
+}
+
+  .sliceBox .sliceText {
+    /* color: orange; */
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 80%; 
+    width: 50%;
+  }
+
+    .sliceBox .sliceText p {
+      position: absolute;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+      margin: 0;
+    }
+
+    .sliceBox .sliceBucket {
+      --diameter: 50px;
+
+      position: relative;
+      float: right;
+      margin: auto;
+      margin-top: calc((95px - var(--diameter)) / 2);
+      margin-right: 10px;
+      border-radius: var(--diameter);
+      background-color: white;
+      border: 1px solid var(--gray-color);
+      height: var(--diameter); 
+      width: var(--diameter);
+    }
+
+    .sliceBox .sliceBucket:hover {
+      border: 1px solid purple;
+      cursor: pointer;
+    }
+    
+    .sliceBox .sliceBucket p {
+      position: absolute;
+      font-size: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because "+" is not centered by default */
+      margin: 0;
+    }
+
+
+.leftNav {
+
+  position: absolute;
+  margin-left: 0px;
+  top: calc(var(--header-banner-height) + 10px);
+  left: 0px;
+  width: calc(100vw - var(--queue-space) - var(--prepare-space));
+  margin-top: 0px;
+  height: 100px;
+
+}
+
+.queue-box {
+
+  /* position: relative; */
+  float: left;
+  width: calc(var(--queue-space) - 10px);
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
+  margin: 2px;
+
+}
+
+  .queue-box:hover {
+    border: 1px solid purple;
+    cursor: pointer;
+  }
+
+  .queue-box input {
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid var(--gray-color);
+  }
+
+  
+.queue {  
+
+  width: max-content;
+  border-radius: 5px;
+  margin: 5px;
+  margin: 0;
+
+}
+
+  .queue input {
+
+    text-align: center;
+    position: relative;
+    border: 1px white;
+  }
+
+.preview-img-box {
+
+  float: left;
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
+
+  margin: 5px;
+
+}
+
+.preview-img {  
+
+  /* .preview-img */
+  --image-height: 100px;
+  --image-width: 100px;
+  --border-width: 1;
+
+  /* height: calc( var(--image-height) - 2 * var(--border-width) ); */
+  height: 200px;
+  width: 200px;
+  
+  background-size: contain;
+  /* width: calc( var(--image-width) - 2 * var(--border-width) ); */
+  /* margin: var(--border-width); */
+  
+  border-radius: 5px;
+  /* background-position: center; */
+
+  /* margin: 5px; */
+
+}
+
+.preview-img-box:hover {
+  border: 1px solid purple;
+  cursor: pointer;
+}
+
+.vr {
+  position: fixed;
+  top: var(--header-banner-height);
+  bottom: 0px;
+	border-left: 1px solid var(--gray-color);
+	height: 100vh;
+  margin-left: calc(100vw - var(--prepare-space));
+}
+
+
+#QueueHeader {
+  position: absolute;
+  margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
+  top: var(--header-banner-height);
+  width: var(--queue-space);
+  margin-top: 0px;
+  height: 100px;
+  background-color: rgb(241, 241, 241);
+}
+
+  #QueueHeader .newqueuelabel {
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 80%; 
+    width: 50%;
+  }
+
+    #QueueHeader .newqueuelabel p {
+      position: absolute;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+      margin: 0;
+    }
+
+    #QueueHeader .newqueuebutton {
+      position: relative;
+      float: right;
+      margin-top: 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      background-color: white;
+      border: 1px solid var(--gray-color);
+      height: 80%; 
+      width: 40%;
+    }
+
+    #QueueHeader .newqueuebutton:hover {
+      border: 1px solid purple;
+      cursor: pointer;
+    }
+    
+    #QueueHeader .newqueuebutton p {
+      position: absolute;
+      /* font-weight: bold; */
+      font-size: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because "+" is not centered by default */
+      margin: 0;
+    }
+
+#QueueList {
+  width: var(--queue-space);
+  margin-top: 0px;
+  position: absolute;
+  top: calc(var(--header-height) + var(--header-banner-height));
+  margin-right: calc(var(--prepare-space));
+  margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
+  text-align: center;
+  align-items: center;
+}
+
+/**/
+
+#EditorHeader {
+  margin-left: calc(100vw - var(--prepare-space));
+  position: absolute;
+  top: var(--header-banner-height);
+  width: var(--prepare-space);
+  margin-top: 0px;
+  height: var(--header-height);
+  background-color: rgb(241, 241, 241);
+}
+
+  #EditorHeader .neweditorlabel {
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 80%; 
+    width: 50%;
+  }
+
+    #EditorHeader .neweditorlabel p {
+      position: absolute;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+      margin: 0;
+    }
+  
+  #EditorHeader .neweditorbutton {
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid var(--gray-color);
+    height: 80%; 
+    width: 40%;
+  }
+
+    #EditorHeader .neweditorbutton:hover {
+      border: 1px solid purple;
+      cursor: pointer;
+    }
+    
+    #EditorHeader .neweditorbutton p {
+      position: absolute;
+      /* font-weight: bold; */
+      font-size: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because "+" is not centered by default */
+      margin: 0;
+    }
+
+#EditorList {
+  width: var(--prepare-space);
+  margin-top: 0px;
+  position: absolute;
+  top: calc(var(--header-height) + var(--header-banner-height));
+  margin-left: calc(100vw - var(--prepare-space));
+  text-align: center;
+  align-items: center;
+}
+
+.App {
+  margin-top: 100px;
+  margin-left: 50vw;
+  text-align: center;
+  align-items: center;
+}
+
+/* For dropdown arrow */
+.arrow {
+  position: absolute;
+
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: block;
+  padding: 3px;
+
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+  float: right;
+  top: 0px;
+
+}
+
+.xbutton {
+  position: absolute;
+
+  display: block;
+  /* padding: 3px; */
+
+  float: right;
+  top: 2px;
+
+  font-weight: bold;
+
+  top: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+

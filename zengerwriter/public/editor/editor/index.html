@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Zenger Writer</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="apple-touch-icon" href="images/icon.png">
+		<link rel="manifest" href="manifest.json">
+		<link rel="shortcut icon" href="../files/favicon.ico" />
+	</head>
+	<body>
+		
+		<link rel="stylesheet" href="css/main.css">
+
+		<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-alpha2/html2canvas.min.js" integrity="sha512-CJi0bpUbf0lNblXz2lmO5mtVBlWi4XLoJjspIsuDemuYf0DbrQnuR/aXvvEpOjr6pyD0iJqeFnljtfcEZ4tYCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="../examples/js/libs/draco/draco_encoder.js"></script>
+		<!-- <script src="../examples/js/controls/OrbitControls.js"></script> -->
+
+		<link rel="stylesheet" href="js/libs/codemirror/codemirror.css">
+		<link rel="stylesheet" href="js/libs/codemirror/theme/monokai.css">
+		<script src="js/libs/codemirror/codemirror.js"></script>
+		<script src="js/libs/codemirror/mode/javascript.js"></script>
+		<script src="js/libs/codemirror/mode/glsl.js"></script>
+
+		<script src="js/libs/esprima.js"></script>
+		<script src="js/libs/jsonlint.js"></script>
+
+		<link rel="stylesheet" href="js/libs/codemirror/addon/dialog.css">
+		<link rel="stylesheet" href="js/libs/codemirror/addon/show-hint.css">
+		<link rel="stylesheet" href="js/libs/codemirror/addon/tern.css">
+
+		<script src="js/libs/codemirror/addon/dialog.js"></script>
+		<script src="js/libs/codemirror/addon/show-hint.js"></script>
+		<script src="js/libs/codemirror/addon/tern.js"></script>
+		<script src="js/libs/acorn/acorn.js"></script>
+		<script src="js/libs/acorn/acorn_loose.js"></script>
+		<script src="js/libs/acorn/walk.js"></script>
+		<script src="js/libs/ternjs/polyfill.js"></script>
+		<script src="js/libs/ternjs/signal.js"></script>
+		<script src="js/libs/ternjs/tern.js"></script>
+		<script src="js/libs/ternjs/def.js"></script>
+		<script src="js/libs/ternjs/comment.js"></script>
+		<script src="js/libs/ternjs/infer.js"></script>
+		<script src="js/libs/ternjs/doc_comment.js"></script>
+		<script src="js/libs/tern-threejs/threejs.js"></script>
+		<script src="js/libs/signals.min.js"></script>
+
+		<script type="module">
+
+			// const urlParams = new URLSearchParams(window.location.search);
+			// var editorURL = urlParams.get('editorURL');
+			var queries = ["?editorURL=", "&username=", "&editorID=", "&editorName="];
+
+			var urlVars = window.location.search.toString();
+			var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
+			var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
+			var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.indexOf(queries[3]) );
+			var editorName = urlVars.slice( urlVars.indexOf(queries[3]) + queries[3].length, urlVars.length );
+			editorName = decodeURIComponent(editorName);  // Decode percent encoding
+			console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
+
+			// Suppress selective errors
+			window.onerror = ( message ) => {
+
+				console.log( message )
+				if ( message == 'THREE.BufferGeometry.computeBoundingBox(): Computed min/max have NaN values. The "position" attribute is likely to have NaN values.' ) {
+
+					return true;
+
+				}
+
+			}
+
+
+			import * as THREE from '../build/three.module.js';
+
+			import { Editor } from './js/Editor.js';
+			import { Viewport } from './js/Viewport.js';
+			import { Toolbar } from './js/Toolbar.js';
+			import { Script } from './js/Script.js';
+			import { Player } from './js/Player.js';
+			import { Sidebar } from './js/Sidebar.js';
+			import { Menubar } from './js/Menubar.js';
+			import { Resizer } from './js/Resizer.js';
+			import { VRButton } from '../examples/jsm/webxr/VRButton.js';
+			import { ViewSelection } from './js/ViewSelection.js';
+			import { LayerSelection } from './js/LayerSelection.js';
+			// import { Preview } from './js/Preview.js'
+
+			import { SetEditorInfo, Save, Move, Delete } from './js/API.js';
+			import { CreateID } from './js/libs/ID.js'
+
+			window.URL = window.URL || window.webkitURL;
+			window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+
+			Number.prototype.format = function () {
+
+				return this.toString().replace( /(\d)(?=(\d{3})+(?!\d))/g, '$1,' );
+
+			};
+
+			//
+
+			var editor = new Editor();
+			editor.username = username;
+			editor.editorID = editorID;
+			editor.oldID = editorID;  // for removing old editor once saving updates it
+
+
+			// Editor info: contains the name and settings. 
+			editor.editorInfo = {}
+			await SetEditorInfo( editor )
+			console.log(editor.editorInfo)
+
+			editor.editorName = editor.editorInfo['name']
+
+			// Update slice settings from editorInfo
+			const { name, ...settingsInfo } = editor.editorInfo  // Exclude 'name'
+			for ( var category in settingsInfo ) {
+				for ( var setting in settingsInfo[category] ) {
+					editor.settings.dict[category][setting] = settingsInfo[category][setting];
+				}
+			}
+
+			window.editor = editor; // Expose editor to Console
+			window.THREE = THREE; // Expose THREE to APP Scripts and Console
+			window.VRButton = VRButton; // Expose VRButton to APP Scripts
+
+			// dynamically block the screen
+			addScreenBlocker(); 
+
+			var viewport = new Viewport( editor, 235, 200 );
+			document.body.appendChild( viewport.dom );
+
+			var toolbar = new Toolbar( editor );
+			document.body.appendChild( toolbar.dom );
+
+			var script = new Script( editor );
+			document.body.appendChild( script.dom );
+
+			var player = new Player( editor );
+			document.body.appendChild( player.dom );
+
+			var sidebar = new Sidebar( editor );
+			document.body.appendChild( sidebar.dom );
+
+			var menubar = new Menubar( editor );
+			document.body.appendChild( menubar.dom );
+
+			var resizer = new Resizer( editor );
+			document.body.appendChild( resizer.dom );
+
+			var viewSelection = new ViewSelection( editor );
+			document.body.appendChild( viewSelection.dom );
+
+			var layerSelection = new LayerSelection( editor );
+			document.body.appendChild( layerSelection.dom );
+
+			console.log( layerSelection.selection );
+
+			// Default to part view
+			editor.signals.partView.dispatch();
+
+			// var preview = new Preview( editor );
+			// document.body.appendChild( preview.dom );
+
+			//
+
+			function addScreenBlocker() {
+
+				var screenBlock = document.createElement("div");
+				screenBlock.className = "screen-block";
+				screenBlock.id = "screenBlock";
+				screenBlock.style.display = "none"
+				document.body.appendChild(screenBlock);
+
+			}
+
+			// Block screen while editor.json is being loaded
+			document.getElementById("screenBlock").style.display = "block";
+
+			// Load in editor from the cloud
+			console.log("fetching URL:", editorURL);
+			fetch(editorURL, {
+				method: 'GET',
+				mode: 'cors',
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				redirect: 'follow',
+				referrerPolicy: 'no-referrer', 
+			})
+			.then(response => response.json())
+			.then(data => {
+
+				console.log("DATA:", data);
+
+				editor.fromJSON( data );
+
+				var timeout;
+
+				async function saveState() {
+
+					clearTimeout( timeout );
+
+					timeout = setTimeout( function () {
+
+						editor.signals.savingStarted.dispatch();
+
+						timeout = setTimeout( async function () {
+
+							// Save to cloud
+							console.log("Saving to cloud.");
+
+							Save( editor, username, editorID )
+							.then( (response) => {
+
+								console.log(response);
+								setTimeout( function() { editor.signals.savingFinished.dispatch(); }, 2000);
+								
+							});
+
+						}, 0.01 ); // 100
+
+					}, 0.01 ); // 1000
+
+				}
+
+				var signals = editor.signals;
+
+				// force save even if not autosaving when the home button is clicked
+				// signals.homeButtonClicked.add( saveState );
+
+				//
+
+				document.addEventListener( 'dragover', function ( event ) {
+
+					event.preventDefault();
+					event.dataTransfer.dropEffect = 'copy';
+
+				}, false );
+
+				document.addEventListener( 'drop', function ( event ) {
+
+					event.preventDefault();
+					// console.log("file dropped.");
+
+					if ( event.dataTransfer.types[ 0 ] === 'text/plain' ) return; // Outliner drop
+
+					if ( editor.viewMode == 'Part' ) {
+
+						if ( event.dataTransfer.items ) {
+
+							// DataTransferItemList supports folders
+							// This block is called when dropping in a random STL. 
+							editor.loader.loadItemList( event.dataTransfer.items );
+
+						} else {
+
+							editor.loader.loadFiles( event.dataTransfer.files );
+
+						}
+
+					}
+					
+				}, false );
+
+				function onWindowResize() {
+
+					editor.signals.windowResize.dispatch();
+
+				}
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				onWindowResize();
+
+				// Allow access to screen
+				document.getElementById("screenBlock").style.display = "none";
+				
+				signals.save.add( function() {
+
+					// Create new ID to update "timestamp"
+					editor.editorID = CreateID();
+
+					// Array of promises ( only execute delete once objects are successfully copied to new location )
+					var copyPromises = [];
+
+					// Move old info into new path
+					let origin_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/info.json';
+					let destination_path = 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json';
+					copyPromises.push( Move( origin_path, destination_path, editor ) );
+
+					// Move old gcode into new path
+					origin_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/plate.gcode';
+					destination_path = 'Users/' + editor.username + '/projects/' + editor.editorID + '/plate.gcode';
+					copyPromises.push( Move( origin_path, destination_path, editor ) );
+
+					console.log("copyPromises:", copyPromises);
+
+					Promise.all( copyPromises ).then( () => {
+
+						// Delete old info
+						let old_folder_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/';
+						console.log(old_folder_path)
+						Delete( old_folder_path, editor ).then(
+							() => {
+								// Allow editor to be exited when Menubar.Home is ready
+								if (!editor.saveFulfilled) {
+									editor.delMoveFulfilled = true;
+								} else {
+									window.location='/';
+								}
+							}
+						);
+
+					} )
+
+				})
+			
+			});
+
+			
+
+
+
+		</script>
+	</body>
+</html>

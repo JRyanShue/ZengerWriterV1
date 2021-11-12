@@ -1,0 +1,1051 @@
+:root {
+	color-scheme: light dark;
+	--bar-height: 60px;
+	--line-height: 16px; 
+	--padding-amount: 8px;
+
+	--home-icon-width: calc( 2*var(--padding-amount) + 40px );
+	--home-icon-height: calc( 2*var(--padding-amount) + 40px );
+
+	--layerSelectionBar-X: 30px;
+}
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	margin: 0;
+	overflow: hidden;
+}
+
+hr {
+	border: 0;
+	border-top: 1px solid #ccc;
+}
+
+.vr {
+	/* border: 0; */
+	position: fixed;
+	top: 0px;
+	border-left: 2px solid #fff;
+	height: var(--bar-height);
+}
+
+button {
+	position: relative;
+}
+
+input {
+	vertical-align: middle;
+}
+
+	input[type="color"]::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+	input[type="color"]::-webkit-color-swatch {
+		border: none;
+	}
+
+textarea {
+	tab-size: 4;
+	white-space: pre;
+	word-wrap: normal;
+	vertical-align: middle;
+}
+
+	textarea.success {
+		border-color: #8b8 !important;
+	}
+
+	textarea.fail {
+		border-color: #f00 !important;
+		background-color: rgba(255,0,0,0.05);
+	}
+
+textarea, input { outline: none; } /* osx */
+
+
+#LayerSlider {
+
+	--topbottom-distance: 50px;
+	--top-distance: calc(var(--bar-height) + var(--topbottom-distance));
+	--width: 10px;
+
+	position: absolute;
+
+	width: var(--width);
+
+	border-radius: calc(var(--width)/2);
+
+	top: calc(var(--top-distance) - var(--width)/2);
+	left: calc(var(--layerSelectionBar-X) - var(--width)/2);
+	bottom: calc(var(--topbottom-distance) - var(--width)/2);
+
+	z-index: 7;
+
+	background-color: black;
+
+}
+
+#LayerSelectionArea {
+
+	--width: 10px;
+
+	position: absolute;
+
+	width: var(--width);
+
+	left: calc(var(--layerSelectionBar-X) - var(--width)/2);
+
+	z-index: 8;
+
+	background-color: blue;
+
+}
+
+.Ball {
+
+	--diameter: 20px;
+
+	position: absolute;
+
+	width: var(--diameter);
+	height: var(--diameter);
+
+	border-radius: calc(var(--diameter)/2);
+
+	left: calc(30px - var(--diameter)/2);
+
+	z-index: 9;
+
+	background-color: blue;
+
+}
+
+	/* .Ball #TopBall {
+
+		top: calc(var(--bar-height) + var(--topbottom-distance) - var(--diameter)/2);
+		top: 100px;
+
+	}
+
+	.Ball #BottomBall {
+
+		bottom: calc(var(--topbottom-distance) - var(--diameter)/2);
+
+	} */
+
+
+.BallLocLabel {
+
+	position: absolute;
+
+	top: 100px;
+	
+	margin-left: 20px;
+	border: 1px solid black;
+	width: min-content;
+	/* width: 10px; */
+
+}
+
+
+#Preview {
+
+	position: absolute;
+
+	width: 100vw;
+	height: 100vh;
+
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	z-index: 8;
+	/* background-color: white; */
+
+}
+
+
+.ViewSelection {
+
+	position: absolute;
+	text-align: center;
+	width: max-content;
+
+	/* Center element horizontally */
+	left: 0;
+	right: 0;
+	margin: auto;
+
+	/* Vertical location */
+	bottom: 10px;
+
+	/* Place children side by side in flexbox model */
+	display: flex;
+
+	/* Always show */
+	z-index: 9;
+
+}
+
+.ViewButton {
+
+	--button-padding: 10px;
+	--border-radius: 5px;
+
+	/* position: absolute; */
+	text-align: center;
+	width: max-content;
+
+	margin: 5px;
+
+}
+
+	.ViewButton .unselected {
+
+		color: black;
+		padding: var( --button-padding );
+		border-radius: var( --border-radius );
+
+	}
+
+		.ViewButton .unselected:hover {
+
+			color: white;
+			background-color: gray;
+
+		}
+
+	.ViewButton .selected {
+
+		color: white;
+		background-color: blue;
+		padding: var( --button-padding );
+		border-radius: var( --border-radius );
+
+	}
+
+
+.Panel {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+
+	/* No support for these yet */
+	-o-user-select: none;
+	user-select: none;
+}
+
+.TabbedPanel {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+
+	/* No support for these yet */
+	-o-user-select: none;
+	user-select: none;
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
+.TabbedPanel .Tabs {
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
+.TabbedPanel .Tabs .Tab {
+	padding: 10px;
+	text-transform: uppercase;
+}
+
+.TabbedPanel .Tabs .Panels {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* Listbox */
+.Listbox {
+	color: #444;
+	background-color: #fff;
+	padding: 0;
+	width: 100%;
+	min-height: 140px;
+	font-size: 12px;
+	cursor: default;
+	overflow: auto;
+}
+
+.Listbox .ListboxItem {
+	padding: 6px;
+	color: #666;
+	white-space: nowrap;
+}
+
+.Listbox .ListboxItem.active {
+	background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* CodeMirror */
+
+.CodeMirror {
+
+	position: absolute !important;
+	top: 37px;
+	width: 100% !important;
+	height: calc(100% - 37px) !important;
+
+}
+
+	.CodeMirror .errorLine {
+
+		background: rgba(255,0,0,0.25);
+
+	}
+
+	.CodeMirror .esprima-error {
+
+		color: #f00;
+		text-align: right;
+		padding: 0 20px;
+
+	}
+
+/* outliner */
+
+#outliner .opener {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin: 0px 4px;
+	vertical-align: top;
+	text-align: center;
+}
+
+	#outliner .opener.open:after {
+		content: '−';
+	}
+
+	#outliner .opener.closed:after {
+		content: '+';
+	}
+
+#outliner .option {
+
+	border: 1px solid transparent;
+
+}
+
+#outliner .option.drag {
+
+	border: 1px dashed #999;
+
+}
+
+#outliner .option.dragTop {
+
+	border-top: 1px dashed #999;
+
+}
+
+#outliner .option.dragBottom {
+
+	border-bottom: 1px dashed #999;
+
+}
+
+#outliner .type {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	color: #ddd;
+	text-align: center;
+}
+
+#outliner .type:after {
+	content: '●';
+}
+
+/* */
+
+#outliner .Scene {
+	color: #8888dd;
+}
+
+#outliner .Camera {
+	color: #dd8888;
+}
+
+#outliner .Light {
+	color: #dddd88;
+}
+
+/* */
+
+#outliner .Object3D {
+	color: #aaaaee;
+}
+
+#outliner .Mesh {
+	color: #8888ee;
+}
+
+#outliner .Line {
+	color: #88ee88;
+}
+
+#outliner .LineSegments {
+	color: #88ee88;
+}
+
+#outliner .Points {
+	color: #ee8888;
+}
+
+/* */
+
+#outliner .Geometry {
+	color: #aaeeaa;
+}
+
+#outliner .Material {
+	color: #eeaaee;
+}
+
+/* */
+
+#outliner .Script:after {
+	content: '◎'
+}
+
+/*  */
+
+button {
+	color: #555;
+	background-color: #ddd;
+	border: 0px;
+	margin: 0px; /* GNOME Web */
+	padding: 5px 8px;
+	text-transform: uppercase;
+	cursor: pointer;
+	outline: none;
+}
+
+	button:hover {
+		background-color: #fff;
+	}
+
+	button.selected {
+		background-color: #fff;
+	}
+
+.setting-button {
+	margin: 4px;
+}
+
+input, textarea {
+	border: 1px solid transparent;
+	color: #444;
+}
+
+input.Number {
+	color: #08f!important;
+	font-size: 12px;
+	border: 0px;
+	padding: 2px;
+}
+
+select {
+	color: #666;
+	background-color: #ddd;
+	border: 0px;
+	text-transform: uppercase;
+	cursor: pointer;
+	outline: none;
+}
+
+	select:hover {
+		background-color: #fff;
+	}
+
+/* UI */
+
+#resizer {
+	position: absolute;
+	top: 32px;
+	right: 295px;
+	width: 5px;
+	bottom: 0px;
+	/* background-color: rgba(255,0,0,0.5); */
+	cursor: col-resize;
+}
+
+#viewport {
+	position: absolute;
+	top: var(--bar-height);
+	left: 0;
+	right: 0;
+	bottom: 0;
+	color: white;
+}
+
+	#viewport #info {
+		text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
+		pointer-events: none;
+	}
+
+#script {
+	position: absolute;
+	top: 32px;
+	left: 0;
+	right: 300px;
+	bottom: 0;
+	opacity: 0.9;
+}
+
+#player {
+	position: absolute;
+	top: 32px;
+	left: 0;
+	right: 300px;
+	bottom: 0;
+}
+
+#menubar {
+	
+	position: absolute;
+	width: 100%;
+	height: var(--bar-height);
+	/* background: #eee; */
+	background: black;
+	padding: 0;
+	margin: 0;
+	right: 0;
+	top: 0;
+}
+
+	#menubar .platetitle {
+		float: left;
+		position: fixed;
+		top: 0px;
+		left: var(--home-icon-width);
+		margin-bottom: calc( var(--line-height) - 2*var(--padding-amount));
+		margin-top: auto;
+
+		/* border: 2px solid rgb(170, 148, 148); */
+
+		height: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) );
+		width: 205px;
+
+		/* margin-left: 20px;
+		margin-top: 4px; */
+	}
+
+	#menubar .platetitle input {
+		--margin-amount: 2px;
+		width: 180px;
+
+		position: absolute;
+		font-size: 18px;
+		color: whitesmoke;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+		margin: var(--margin-amount);
+
+		border-radius: 5px;
+
+		background-color: black;
+	}
+
+	#menubar .platetitle input:hover {
+		border: 1px solid gray;
+	}
+
+	#menubar .menu {
+		float: left;
+		cursor: pointer;
+		padding-right: var(--padding-amount);
+		margin-top: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) );
+	}
+
+	#menubar .menubutton {
+		float: left;
+		background-image: url("../../files/favicon.ico");
+		background-size: contain;
+		width: var(--home-icon-width);
+		height: var(--home-icon-height);
+	}
+
+	#menubar .menubutton:hover {
+		background-color: gray;
+	}
+
+	#menubar .menu.right {
+		float: right;
+		cursor: auto;
+		padding-right: 0;
+		text-align: right;
+	}
+
+		#menubar .menu .title {
+			display: inline-block;
+			/* color: rgb(43, 43, 43); */
+			color: white;
+			margin: 0;
+			padding: var(--padding-amount);
+			/* line-height: var(--line-height); */
+			/* margin-top: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) ); */
+		}
+
+		#menubar .menu .setting {
+			display: inline-block;
+			color: #666;
+			margin: 0;
+			background-color: transparent;
+			padding: 5px 10px;
+			margin: 0 !important;
+		}
+
+		#menubar .title:hover{
+			background: gray;
+		}
+
+		#menubar .menu .options {
+			position: fixed;
+			display: none;
+			padding: 5px 0;
+			background: #eee;
+			width: 150px;
+			max-height: calc(100% - 80px);
+			overflow: auto;
+		}
+
+		#menubar .menu:hover .options {
+			display: block;
+		}
+
+			#menubar .menu .options hr {
+				border-color: #ddd;
+			}
+
+			#menubar .menu .options .option {
+				color: #666;
+				background-color: transparent;
+				padding: 5px 10px;
+				margin: 0 !important;
+			}
+
+				#menubar .menu .options .option:hover {
+					color: #fff;
+					background-color: #08f;
+				}
+
+				#menubar .menu .options .option:active {
+					color: #666;
+					background: transparent;
+				}
+
+		#menubar .menu .options .inactive {
+			color: #bbb;
+			background-color: transparent;
+			padding: 5px 10px;
+			margin: 0 !important;
+		}
+
+#sidebar {
+	position: absolute;
+	right: 0;
+	top: 32px;
+	bottom: 0;
+	width: 300px;
+	background: #eee;
+	overflow: auto;
+	display: none;
+}
+
+	#sidebar .Panel {
+		color: #888;
+		padding: 10px;
+		border-top: 1px solid #ccc;
+	}
+
+	#sidebar .Panel.collapsed {
+		margin-bottom: 0;
+	}
+
+	#sidebar .Row {
+		min-height: 20px;
+		margin-bottom: 10px;
+	}
+
+	#sidebar canvas {
+		vertical-align: middle;
+	}
+
+#tabs {
+	background-color: #ddd;
+	border-top: 1px solid #ccc;
+}
+
+	#tabs span {
+		color: #aaa;
+		/* color: white; */
+		border-right: 1px solid #ccc;
+		padding: 10px;
+	}
+
+	#tabs span.selected {
+		color: #888;
+		background-color: #eee;
+	}
+
+#toolbar {
+	position: absolute;
+	left: 10px;
+	width: 32px;
+	background: #eee;
+	text-align: center;
+	top: 50%;
+  	margin-top: -64px;
+}
+
+	#toolbar button, #toolbar input {
+		height: 32px;
+	}
+
+		#toolbar button img {
+			width: 16px;
+			opacity: 0.5;
+		}
+
+.Outliner {
+	color: #444;
+	background-color: #fff;
+	/* background-color: white; */
+	padding: 0;
+	width: 100%;
+	height: 140px;
+	font-size: 12px;
+	cursor: default;
+	overflow: auto;
+	resize: vertical;
+	outline: none !important;
+}
+
+	.Outliner .option {
+		padding: 4px;
+		color: #666;
+		white-space: nowrap;
+	}
+
+	.Outliner .option:hover {
+		background-color: rgba(0,0,0,0.02);
+	}
+
+	.Outliner .option.active {
+		background-color: rgba(0,0,0,0.04);
+	}
+
+
+.TabbedPanel .Tabs {
+	background-color: #ddd;
+	border-top: 1px solid #ccc;
+}
+
+	.TabbedPanel .Tab {
+		color: #aaa;
+		/* color: white; */
+		border-right: 1px solid #ccc;
+	}
+
+	.TabbedPanel .Tab.selected {
+		color: #888;
+		background-color: #eee;
+	}
+
+.Listbox {
+	color: #444;
+	background-color: #fff;
+}
+
+.Panel {
+	color: #888;
+}
+
+/* */
+
+@media all and ( max-width: 600px ) {
+
+	#resizer {
+		display: none;
+	}
+
+	#menubar .menu .options {
+		max-height: calc(100% - 372px);
+	}
+
+	#menubar .menu.right {
+		display: none;
+	}
+
+	#viewport {
+		left: 0;
+		right: 0;
+		top: 32px;
+		height: calc(100% - 352px);
+	}
+
+	#script {
+		left: 0;
+		right: 0;
+		top: 32px;
+		height: calc(100% - 352px);
+	}
+
+	#player {
+		left: 0;
+		right: 0;
+		top: 32px;
+		height: calc(100% - 352px);
+	}
+
+	#sidebar {
+		left: 0;
+		width: 100%;
+		top: calc(100% - 320px);
+		bottom: 0;
+	}
+
+}
+
+/* DARK MODE */
+
+@media ( prefers-color-scheme: dark ) {
+
+	button {
+		color: #aaa;
+		/* color: white; */
+		background-color: #222;
+	}
+
+		button:hover {
+			color: #ccc;
+			background-color: #444;
+		}
+
+		button.selected {
+			color: #fff;
+			background-color: #08f;
+		}
+
+	input, textarea {
+		background-color: #222;
+		border: 1px solid transparent;
+		color: #888;
+	}
+
+	select {
+		color: #aaa;
+		/* color: white; */
+		background-color: #222;
+	}
+
+		select:hover {
+			color: #ccc;
+			background-color: #444;
+		}
+
+	/* UI */
+
+	#menubar {
+		background: #111;
+	}
+
+			#menubar .menu .options {
+				background: #111;
+			}
+
+				#menubar .menu .options hr {
+					border-color: #222;
+				}
+
+				#menubar .menu .options .option {
+					color: #888;
+				}
+
+			#menubar .menu .options .inactive {
+				color: #444;
+			}
+
+	#sidebar {
+		background-color: #111;
+	}
+
+		#sidebar .Panel {
+			border-top: 1px solid #222;
+		}
+
+		#sidebar .Panel.Material canvas {
+			border: solid 1px #5A5A5A;
+		}
+
+	#tabs {
+		background-color: #1b1b1b;
+		border-top: 1px solid #222;
+	}
+
+		#tabs span {
+			color: #555;
+			border-right: 1px solid #222;
+		}
+
+		#tabs span.selected {
+			background-color: #111;
+		}
+
+	#toolbar {
+		background-color: #111;
+	}
+
+		#toolbar img {
+			filter: invert(1);
+		}
+
+	.Outliner {
+		color: #888;
+		background: #222;
+	}
+
+		.Outliner .option:hover {
+			background-color: rgba(21,60,94,0.5);
+		}
+
+		.Outliner .option.active {
+			background-color: rgba(21,60,94,1);
+		}
+
+	.TabbedPanel .Tabs {
+		background-color: #1b1b1b;
+		border-top: 1px solid #222;
+	}
+
+		.TabbedPanel .Tab {
+			color: #555;
+			border-right: 1px solid #222;
+		}
+
+		.TabbedPanel .Tab.selected {
+			color: #888;
+			background-color: #111;
+		}
+
+	.Listbox {
+		color: #888;
+		background: #222;
+	}
+
+	.Listbox .ListboxItem:hover {
+		background-color: rgba(21,60,94,0.5);
+	}
+
+	.Listbox .ListboxItem.active {
+		background-color: rgba(21,60,94,1);
+	}
+
+}
+
+/* --box-sizing: border-box; */
+
+/* For disabling the rest of the screen when a form is opened */
+.screen-block {
+	display: none; 
+	opacity: 0.3;
+	height: 100%;
+	margin: 0;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: gray;
+	z-index: 8;
+	position: fixed;
+}
+
+/* The popup form - hidden by default */
+.settings-form {
+  display: none;
+  z-index: 9;
+  position: fixed;
+  /* Center */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 0;
+  right: 15px;
+  /* border: 3px solid #f1f1f1; */
+  
+}
+
+/* Add styles to the form container */
+.form-container {
+  z-index: -1;
+  position: relative;
+  /* max-width: 300px; */
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  /* width: 100%; */
+  padding: 15px;
+  /* margin: 5px 0 22px 0; */
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+/* Close button (span) */
+.close {
+	cursor: pointer;
+	position: absolute;
+	/* top: 50%; */
+	right: 0%;
+	padding: 12px 12px;
+	border-radius: 24px;
+	/* transform: translate(0%, -50%); */
+	margin-top: -30px;
+}
+
+/* .close:hover {background: #bbb;} */

@@ -1,0 +1,1 @@
+insert examples folder from three.js (with js and jsm) into the Zenger-Writer-Frontend directory
