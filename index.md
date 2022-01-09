@@ -1,6 +1,8 @@
 ## Zenger Writer V1
 
-Zenger Writer is a cloud-based slicer for The Zenger 3D Printer. A demo is currently being hosted at http://zenger3d.com (use full address when visiting site). This repository contains code for the frontend of the slicer, including 3D object manipulation, slice setting manipulation, and a google docs-like array view of all build plates. The code for the backend and our WSGI API can be found here: https://github.com/JRyanShue/Zenger-API. 
+Zenger Writer is a cloud-based slicer for The Zenger 3D Printer. A demo is currently being hosted at http://zenger3d.com (use full address when visiting site). This repository contains code for the frontend of the slicer, including 3D object manipulation, slice setting manipulation, and a google docs-like array view of all build plates. Zenger Writer V2 (https://github.com/JRyanShue/ZengerWriterV2) is a partially finished rebuild/refactor of V1, with much cleaner structure. 
+
+Zenger Writer has a corresponding backend and WSGI API, which can be found here: https://github.com/JRyanShue/Zenger-API. 
 
 ### Background
 
