@@ -1,37 +1,9 @@
-## Welcome to GitHub Pages
+## Zenger Writer V1
 
-You can use the [editor on GitHub](https://github.com/JRyanShue/ZengerWriterV1/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Zenger Writer is a cloud-based slicer for The Zenger 3D Printer. A demo is currently being hosted at http://zenger3d.com (use full address when visiting site). This repository contains code for the frontend of the slicer, including 3D object manipulation, slice setting manipulation, and a google docs-like array view of all build plates. The code for the backend and our WSGI API can be found here: https://github.com/JRyanShue/Zenger-API. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Background
 
-### Markdown
+Over the Summer of 2021, my co-founders and I worked on building a novel 3D-printer called The Zenger. We focused on end-to-end automation for small-batch manufacturing, building off of our own experience with The Canopy, a 3D printed consumer-oriented vertical farm (Kickstarter: https://www.kickstarter.com/projects/thecanopy/the-canopy-smart-vertical-farm. We've made many significant changes since then). We found that the largest obstacle to effectively 3D printing small batches of parts was the labor requirement -- we had to manually start and remove prints, and while it was our project and we were working for free, we spent time equivalent to far more than all material costs maintaining production. The Zenger was designed to remove these drawbacks to small-scale 3D-printed production and make FDM 3D printers a viable production solution for small-scale products like The Canopy. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JRyanShue/ZengerWriterV1/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+A simultaneous application we considered was using 3D printers within the workplace. During the Summer of 2020, I was fortunate to intern at Ubiik, an IoT solutions provider. Along with helping design new products, I was in charge of managing the 3D printer, which we were using to produce demo parts in the hundreds (small scale). While 3D printing was by far the most cost-effective means of production (as compared to silicone molds or injection molding), it was still vastly inefficient to have to constantly be removing and starting prints. 
